@@ -44,17 +44,16 @@ namespace Catan
 		public static Hex[][] GenerateBoard()
 		{
 			List<int> rollValues = [2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12];
-			List<Resources> resourceTypes = Enum.GetValues(typeof(Resources))
+			List<Resources> resourceTypes = [.. Enum.GetValues(typeof(Resources))
 												.Cast<Resources>()
-												.SelectMany(r => Enumerable.Repeat(r, 4))
-												.ToList();
+												.SelectMany(r => Enumerable.Repeat(r, 4))];
 
 			Hex[][] tempBoard = [
 				new Hex[3],
-						new Hex[4],
-						new Hex[5],
-						new Hex[4],
-						new Hex[3]
+				new Hex[4],
+				new Hex[5],
+				new Hex[4],
+				new Hex[3]
 			];
 
 			// Shuffle rollValues and resourceTypes
@@ -97,13 +96,13 @@ namespace Catan
 			List<DevelopmentCard> cards = new(25);
 
 			Dictionary<DevelopmentCard.DevelopmentCardType, int> cardCounts = new()
-					{
-						{ DevelopmentCard.DevelopmentCardType.Knight, 14 },
-						{ DevelopmentCard.DevelopmentCardType.VictoryPoint, 5 },
-						{ DevelopmentCard.DevelopmentCardType.RoadBuilding, 2 },
-						{ DevelopmentCard.DevelopmentCardType.Monopoly, 2 },
-						{ DevelopmentCard.DevelopmentCardType.YearOfPlenty, 2 },
-					};
+			{
+				{ DevelopmentCard.DevelopmentCardType.Knight, 14 },
+				{ DevelopmentCard.DevelopmentCardType.VictoryPoint, 5 },
+				{ DevelopmentCard.DevelopmentCardType.RoadBuilding, 2 },
+				{ DevelopmentCard.DevelopmentCardType.Monopoly, 2 },
+				{ DevelopmentCard.DevelopmentCardType.YearOfPlenty, 2 },
+			};
 
 			foreach (KeyValuePair<DevelopmentCard.DevelopmentCardType, int> cardCount in cardCounts)
 			{
@@ -188,7 +187,7 @@ namespace Catan
 					{
 						if (hex.RollValue == roll && !hex.HasRobber && hex.Resource is not null)
 						{
-							foreach (Building building in hex.Vertices)
+							foreach (Building? building in hex.Vertices)
 							{
 								building?.Owner.ResourceCards.Add((Resources)hex.Resource);
 							}

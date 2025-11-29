@@ -9,10 +9,10 @@ namespace Catan
 	/// </summary>
 	public class Player
 	{
-		public List<Resources> ResourceCards = new();
-		public List<Road> Roads = new();
-		public List<Building> Buildings = new();
-		public List<DevelopmentCard> DevelopmentCards = new();
+		public List<Resources> ResourceCards = [];
+		public List<Road> Roads = [];
+		public List<Building> Buildings = [];
+		public List<DevelopmentCard> DevelopmentCards = [];
 
 		public readonly ConsoleColor Color;
 
@@ -47,8 +47,7 @@ namespace Catan
 		/// <returns><c>true</c> if the player has the resources; otherwise, <c>false</c>.</returns>
 		private bool HasResources(Resources[] resources)
 		{
-			Dictionary<Resources, int> resourceCounts = ResourceCards.GroupBy(r => r)
-											  .ToDictionary(g => g.Key, g => g.Count());
+			Dictionary<Resources, int> resourceCounts = ResourceCards.GroupBy(r => r).ToDictionary(g => g.Key, g => g.Count());
 
 			foreach (Resources resource in resources)
 			{

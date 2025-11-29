@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace LinkedIn
 {
@@ -57,49 +58,53 @@ namespace LinkedIn
 				Console.WriteLine("\nUp/Down: Move  |  L/R: Move hint up/down  |  V: Reverse  |  Enter: Edit guess  |  C: Check  |  Esc: Exit");
 
 				ConsoleKey key = Console.ReadKey(true).Key;
-				if (key == ConsoleKey.UpArrow)
-					index = Math.Max(0, index - 1);
-				else if (key == ConsoleKey.DownArrow)
-					index = Math.Min(6, index + 1);
-				else if (key == ConsoleKey.L && index > 0)
+				switch (key)
 				{
-					SwapHints(index, index - 1);
-					SwapGuesses(index, index - 1);
-					index--;
+					case ConsoleKey.UpArrow:
+						index = Math.Max(0, index - 1);
+						break;
+					case ConsoleKey.DownArrow:
+						index = Math.Min(6, index + 1);
+						break;
+					case ConsoleKey.L when index > 0:
+						SwapHints(index, index - 1);
+						SwapGuesses(index, index - 1);
+						index--;
+						break;
+					case ConsoleKey.R when index < 6:
+						SwapHints(index, index + 1);
+						SwapGuesses(index, index + 1);
+						index++;
+						break;
+					case ConsoleKey.V:
+						IsReversed = !IsReversed;
+						break;
+					case ConsoleKey.Enter:
+						Console.SetCursorPosition(0, 10 + index); // Move cursor to the guess line
+						Console.Write("Enter your guess: ");
+						string guess = Console.ReadLine() ?? "";
+						Guesses[index] = guess;
+						break;
+					case ConsoleKey.C:
+						Console.WriteLine();
+						(bool allCorrect, bool transitionOk) = CheckSolution();
+						if (allCorrect && transitionOk)
+							Console.WriteLine("Congratulations! All guesses are correct, in the right order, and transitions are valid!");
+						else
+						{
+							if (!allCorrect)
+								Console.WriteLine("Some guesses are incorrect or out of order.");
+							if (!transitionOk)
+								Console.WriteLine("Some transitions between words are invalid (not a 1-letter change).");
+						}
+						Console.WriteLine("Press any key to continue...");
+						Console.ReadKey(true);
+						break;
+					case ConsoleKey.Escape:
+						break;
+					default:
+						break;
 				}
-				else if (key == ConsoleKey.R && index < 6)
-				{
-					SwapHints(index, index + 1);
-					SwapGuesses(index, index + 1);
-					index++;
-				}
-				else if (key == ConsoleKey.V)
-					IsReversed = !IsReversed;
-				else if (key == ConsoleKey.Enter)
-				{
-					Console.SetCursorPosition(0, 10 + index); // Move cursor to the guess line
-					Console.Write("Enter your guess: ");
-					string guess = Console.ReadLine() ?? "";
-					Guesses[index] = guess;
-				}
-				else if (key == ConsoleKey.C)
-				{
-					Console.WriteLine();
-					(bool allCorrect, bool transitionOk) = CheckSolution();
-					if (allCorrect && transitionOk)
-						Console.WriteLine("Congratulations! All guesses are correct, in the right order, and transitions are valid!");
-					else
-					{
-						if (!allCorrect)
-							Console.WriteLine("Some guesses are incorrect or out of order.");
-						if (!transitionOk)
-							Console.WriteLine("Some transitions between words are invalid (not a 1-letter change).");
-					}
-					Console.WriteLine("Press any key to continue...");
-					Console.ReadKey(true);
-				}
-				else if (key == ConsoleKey.Escape)
-					break;
 			}
 		}
 
@@ -117,15 +122,7 @@ namespace LinkedIn
 			Guesses[j] = temp.Item1;
 		}
 
-		private string[] GetCurrentHints()
-		{
-			if (!IsReversed)
-				return Hints;
-			string[] reversed = new string[7];
-			for (int i = 0; i < 7; i++)
-				reversed[i] = Hints[6 - i];
-			return reversed;
-		}
+		private string[] GetCurrentHints()  => IsReversed ? Hints : [.. Hints.Reverse()];
 
 		// Utility: Check if two words differ by exactly one character
 		public static bool IsValidTransition(string a, string b)

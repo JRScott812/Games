@@ -3,33 +3,27 @@
 	/// <summary>
 	/// Represents a hex tile in the Catan game.
 	/// </summary>
-	public class Hex
+	/// <remarks>
+	/// Initializes a new instance of the <see cref="Hex"/> class with the specified resource and roll value.
+	/// </remarks>
+	/// <param name="resource">The resource type of the hex tile.</param>
+	/// <param name="rollValue">The roll value of the hex tile.</param>
+	public class Hex(Resources? resource, int rollValue)
 	{
 		/// <summary>
 		/// Gets the resource type of the hex tile.
 		/// </summary>
-		public readonly Resources? Resource;
+		public readonly Resources? Resource = resource;
 
 		/// <summary>
 		/// Gets the roll value of the hex tile.
 		/// </summary>
-		public readonly int RollValue;
+		public readonly int RollValue = rollValue;
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the hex tile has a robber.
 		/// </summary>
 		public bool HasRobber;
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Hex"/> class with the specified resource and roll value.
-		/// </summary>
-		/// <param name="resource">The resource type of the hex tile.</param>
-		/// <param name="rollValue">The roll value of the hex tile.</param>
-		public Hex(Resources? resource, int rollValue)
-		{
-			Resource = resource;
-			RollValue = rollValue;
-		}
 
 		/// <summary>
 		/// The 6 connected hexes. Null if there is no hex.

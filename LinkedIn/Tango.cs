@@ -47,12 +47,8 @@ namespace LinkedIn
 			{
 				for (int c = 0; c < Grid.GetLength(1); c++)
 				{
-					if (Grid[r, c] == true)
-						Console.Write("☀️ ");
-					else if (Grid[r, c] == false)
-						Console.Write("🌙 ");
-					else
-						Console.Write(". ");
+					string icon = Grid[r, c] == true ? "☀️ " : Grid[r, c] == false ? "🌙 " : ". ";
+					Console.Write(icon);
 				}
 				Console.WriteLine();
 			}
@@ -185,7 +181,7 @@ namespace LinkedIn
 			int nextRow = (col == 5) ? row + 1 : row;
 			int nextCol = (col + 1) % 6;
 
-			bool[] vals = new[] { true, false };
+			bool[] vals = [true, false];
 			_random.Shuffle(vals);
 
 			foreach (bool val in vals)
