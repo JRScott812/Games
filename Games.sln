@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.9.34607.119
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper", "Minesweeper\Minesweeper.csproj", "{F8D27BC8-94D7-4207-80A9-4CDF9A080EA3}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "New York Times", "New York Times\New York Times.csproj", "{FECE17A8-9442-495C-A61C-EE149391F8C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedIn", "LinkedIn\LinkedIn.csproj", "{52B42792-7C76-47FB-B53E-DE27FE185334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monopoly", "Monopoly\Monopoly.csproj", "{1140D7E4-8EBB-4305-8E8E-FA8A021447A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{52B42792-7C76-47FB-B53E-DE27FE185334}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52B42792-7C76-47FB-B53E-DE27FE185334}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52B42792-7C76-47FB-B53E-DE27FE185334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1140D7E4-8EBB-4305-8E8E-FA8A021447A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1140D7E4-8EBB-4305-8E8E-FA8A021447A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1140D7E4-8EBB-4305-8E8E-FA8A021447A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1140D7E4-8EBB-4305-8E8E-FA8A021447A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
