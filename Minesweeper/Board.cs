@@ -298,7 +298,7 @@ namespace Minesweeper
 					case ConsoleKey.Spacebar:
 						Flag();
 						break;
-						#endregion
+					#endregion
 				}
 				PrintArray();
 				key = Console.ReadKey().Key;

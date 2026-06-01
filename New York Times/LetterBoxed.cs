@@ -12,7 +12,7 @@ namespace New_York_Times
 		List<string> foundWords = [];
 
 		public LetterBoxed() : base()
-        {
+		{
 			string[] lines = File.ReadAllLines(filePath);
 
 			// Each side is 3 lines, separated by a blank line

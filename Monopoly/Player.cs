@@ -1,4 +1,7 @@
-﻿namespace Monopoly
+﻿using System;
+using System.Collections.Generic;
+
+namespace Monopoly
 {
 	public class Player(string name, string icon)
 	{

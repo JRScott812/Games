@@ -95,7 +95,7 @@ namespace New_York_Times
 
 				// Check if the selection matches a category
 				bool found = false;
-				foreach (var kvp in Categories)
+				foreach (KeyValuePair<string, string[]> kvp in Categories)
 				{
 					if (foundCategories.Contains(kvp.Key)) continue;
 					if (kvp.Value.All(selections.Contains) && selections.All(kvp.Value.Contains))

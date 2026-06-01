@@ -1,4 +1,6 @@
-﻿namespace Monopoly
+﻿using System;
+
+namespace Monopoly
 {
 	public class Property(string name, ConsoleColor color) : Tile(name)
 	{

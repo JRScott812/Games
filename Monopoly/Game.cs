@@ -1,5 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System;
+using System.Collections.Generic;
 
 namespace Monopoly
 {
@@ -57,7 +58,7 @@ namespace Monopoly
 		];
 
 		public List<Card> ChanceCards = [
-			
+
 		];
 		public List<Card> CommunityChestCards = [
 
@@ -128,7 +129,7 @@ namespace Monopoly
 			{
 				(int die1, int die2) = RollDice();
 				int totalValue = die1 + die2;
-				
+
 				Console.WriteLine($"{player.Name} rolled a {die1} and a {die2} (Total: {totalValue})\t(Pairs in a row: {speedingCount})");
 
 				if (die1 == die2)

@@ -354,8 +354,7 @@ namespace New_York_Times
 		{
 			Dictionary<int, CrosswordEntry> map = isAcross ? Across : Down;
 
-			CrosswordEntry entry;
-			if (!map.TryGetValue(number, out entry))
+			if (!map.TryGetValue(number, out CrosswordEntry entry))
 			{
 				PauseWithMessage("No such clue number.");
 				return;
@@ -599,7 +598,7 @@ namespace New_York_Times
 				return false;
 			}
 
-			string left = text.Substring(0, sepIndex).Trim();
+			string left = text[..sepIndex].Trim();
 			string right = text[(sepIndex + 1)..].Trim();
 			return int.TryParse(left, out rows) && int.TryParse(right, out cols) && rows > 0 && cols > 0;
 		}
@@ -617,7 +616,7 @@ namespace New_York_Times
 			int dot = line.IndexOf('.');
 			if (dot <= 0) return;
 
-			string numberText = line.Substring(0, dot);
+			string numberText = line[..dot];
 			if (!int.TryParse(numberText, out int n)) return;
 
 			string clue = line[(dot + 1)..].Trim();

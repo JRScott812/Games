@@ -122,7 +122,7 @@ namespace LinkedIn
 			Guesses[j] = temp.Item1;
 		}
 
-		private string[] GetCurrentHints()  => IsReversed ? Hints : [.. Hints.Reverse()];
+		private string[] GetCurrentHints() => IsReversed ? Hints : [.. Hints.Reverse()];
 
 		// Utility: Check if two words differ by exactly one character
 		public static bool IsValidTransition(string a, string b)

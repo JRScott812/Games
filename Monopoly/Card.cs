@@ -1,4 +1,6 @@
-﻿namespace Monopoly
+﻿using System;
+
+namespace Monopoly
 {
 	public class Card(string name, string icon, string description)
 	{
