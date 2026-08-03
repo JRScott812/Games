@@ -51,7 +51,7 @@ namespace New_York_Times
 			// Try to load puzzle from file; if not found, we just show instructions in Main
 			if (File.Exists(filePath))
 			{
-				TryLoadPuzzle(filePath, out string error);
+				_ = TryLoadPuzzle(filePath, out string error);
 				if (error is { Length: > 0 })
 				{
 					Console.Error.WriteLine($"Failed to load crossword: {error}");
@@ -109,6 +109,7 @@ namespace New_York_Times
 							PauseWithMessage("Format: A|D <number> <answer>");
 							break;
 						}
+
 						int num;
 						if (!int.TryParse(parts[1], out num))
 						{
@@ -131,6 +132,7 @@ namespace New_York_Times
 							PauseWithMessage("Press any key to return to menu...");
 							return;
 						}
+
 						break;
 
 					case "C":
@@ -143,6 +145,7 @@ namespace New_York_Times
 							PauseWithMessage("Format: R <A|D> <number>");
 							break;
 						}
+
 						string ad = parts[1].ToUpperInvariant();
 						int n;
 						if ((ad != "A" && ad != "D") || !int.TryParse(parts[2], out n))
@@ -150,6 +153,7 @@ namespace New_York_Times
 							PauseWithMessage("Format: R <A|D> <number>");
 							break;
 						}
+
 						Reveal(ad == "A", n);
 						break;
 
@@ -170,10 +174,7 @@ namespace New_York_Times
 		/// <param name="r">Row index.</param>
 		/// <param name="c">Column index.</param>
 		/// <returns>True if the cell contains '#'; otherwise false.</returns>
-		private bool IsBlock(int r, int c)
-		{
-			return Solution[r, c] == '#';
-		}
+		private bool IsBlock(int r, int c) => Solution[r, c] == '#';
 
 		/// <summary>
 		/// Builds a horizontal separator line for the ASCII grid (e.g., +---+---+).
@@ -181,12 +182,13 @@ namespace New_York_Times
 		/// <returns>Separator line string.</returns>
 		private string BuildHorizontalLine()
 		{
-			StringBuilder sb = new StringBuilder(Cols * 4 + 1);
+			StringBuilder sb = new((Cols * 4) + 1);
 			for (int c = 0; c < Cols; c++)
 			{
-				sb.Append("+---");
+				_ = sb.Append("+---");
 			}
-			sb.Append('+');
+
+			_ = sb.Append('+');
 			return sb.ToString();
 		}
 
@@ -209,8 +211,8 @@ namespace New_York_Times
 				Console.WriteLine(sep);
 
 				// Row content
-				StringBuilder rowBuilder = new StringBuilder(Cols * 4 + 1);
-				rowBuilder.Append('|');
+				StringBuilder rowBuilder = new((Cols * 4) + 1);
+				_ = rowBuilder.Append('|');
 				for (int c = 0; c < Cols; c++)
 				{
 					char toShow;
@@ -225,11 +227,12 @@ namespace New_York_Times
 						toShow = showAll ? sol : (cur == '\0' ? ' ' : cur);
 					}
 
-					rowBuilder.Append(' ');
-					rowBuilder.Append(toShow);
-					rowBuilder.Append(' ');
-					rowBuilder.Append('|');
+					_ = rowBuilder.Append(' ');
+					_ = rowBuilder.Append(toShow);
+					_ = rowBuilder.Append(' ');
+					_ = rowBuilder.Append('|');
 				}
+
 				Console.WriteLine(rowBuilder.ToString());
 			}
 			// Closing separator
@@ -272,7 +275,7 @@ namespace New_York_Times
 		{
 			Console.WriteLine(message);
 			Console.WriteLine("Press any key to continue...");
-			Console.ReadKey(true);
+			_ = Console.ReadKey(true);
 		}
 
 		/// <summary>
@@ -304,6 +307,7 @@ namespace New_York_Times
 					chars.Add(char.ToUpperInvariant(ch));
 				}
 			}
+
 			string normalized = new([.. chars]);
 
 			if (normalized.Length != entry.Length)
@@ -318,6 +322,7 @@ namespace New_York_Times
 				int cc = entry.Col + (entry.IsAcross ? i : 0);
 				Current[rr, cc] = normalized[i];
 			}
+
 			return true;
 		}
 
@@ -342,6 +347,7 @@ namespace New_York_Times
 					if (cur != '\0' && cur == sol) correct++;
 				}
 			}
+
 			PauseWithMessage($"Filled: {filled}/{total} | Correct so far: {correct}");
 		}
 
@@ -383,6 +389,7 @@ namespace New_York_Times
 						return false;
 				}
 			}
+
 			return true;
 		}
 
@@ -526,6 +533,7 @@ namespace New_York_Times
 						error = $"Row {r + 1} has length {row.Length}, expected {cols}.";
 						return false;
 					}
+
 					for (int c = 0; c < cols; c++)
 					{
 						char ch = row[c];
@@ -536,8 +544,8 @@ namespace New_York_Times
 
 				// Read ACROSS:
 				while (idx < lines.Length && !string.Equals(lines[idx].Trim(), "ACROSS:", StringComparison.OrdinalIgnoreCase)) idx++;
-				Dictionary<int, string> acrossClues = new Dictionary<int, string>();
-				Dictionary<int, string> downClues = new Dictionary<int, string>();
+				Dictionary<int, string> acrossClues = [];
+				Dictionary<int, string> downClues = [];
 
 				if (idx < lines.Length && string.Equals(lines[idx].Trim(), "ACROSS:", StringComparison.OrdinalIgnoreCase))
 				{
@@ -591,11 +599,7 @@ namespace New_York_Times
 			if (sepIndex < 0)
 			{
 				string[] partsSpace = text.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-				if (partsSpace.Length == 2 && int.TryParse(partsSpace[0], out rows) && int.TryParse(partsSpace[1], out cols) && rows > 0 && cols > 0)
-				{
-					return true;
-				}
-				return false;
+				return partsSpace.Length == 2 && int.TryParse(partsSpace[0], out rows) && int.TryParse(partsSpace[1], out cols) && rows > 0 && cols > 0;
 			}
 
 			string left = text[..sepIndex].Trim();

@@ -4,7 +4,7 @@ namespace LinkedIn
 {
 	internal class Program
 	{
-		static void Main()
+		private static void Main()
 		{
 			Console.WriteLine("Select Game:");
 			Console.WriteLine("1) Sudoku");

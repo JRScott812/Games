@@ -27,7 +27,7 @@ namespace New_York_Times
 
 				string category = parts[0].Trim();
 				string[] items = parts[1].Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-				Categories.TryAdd(category, items);
+				_ = Categories.TryAdd(category, items);
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace New_York_Times
 			Board = GenerateBoard(Categories);
 
 			// Track found categories
-			HashSet<string> foundCategories = new();
+			HashSet<string> foundCategories = [];
 
 			while (foundCategories.Count < Categories.Count)
 			{
@@ -47,7 +47,7 @@ namespace New_York_Times
 				Console.WriteLine();
 
 				// Display the board
-				List<string> remainingItems = new();
+				List<string> remainingItems = [];
 				for (int i = 0; i < Board.GetLength(0); i++)
 				{
 					for (int j = 0; j < Board.GetLength(1); j++)
@@ -81,15 +81,15 @@ namespace New_York_Times
 				if (selections.Length != 4)
 				{
 					Console.WriteLine("Please enter exactly 4 items. Press any key to try again...");
-					Console.ReadKey(true);
+					_ = Console.ReadKey(true);
 					continue;
 				}
 
 				// Check if all selections are in the remaining items
-				if (!selections.All(item => remainingItems.Contains(item)))
+				if (!selections.All(remainingItems.Contains))
 				{
 					Console.WriteLine("One or more selections are invalid or already found. Press any key to try again...");
-					Console.ReadKey(true);
+					_ = Console.ReadKey(true);
 					continue;
 				}
 
@@ -101,7 +101,7 @@ namespace New_York_Times
 					if (kvp.Value.All(selections.Contains) && selections.All(kvp.Value.Contains))
 					{
 						Console.WriteLine($"Correct! You found the category: {kvp.Key}");
-						foundCategories.Add(kvp.Key);
+						_ = foundCategories.Add(kvp.Key);
 						found = true;
 						break;
 					}
@@ -113,7 +113,7 @@ namespace New_York_Times
 				}
 
 				Console.WriteLine("Press any key to continue...");
-				Console.ReadKey(true);
+				_ = Console.ReadKey(true);
 			}
 
 			Console.WriteLine("Game over! Thanks for playing.");
@@ -133,12 +133,14 @@ namespace New_York_Times
 							matches++;
 						}
 					}
+
 					if (matches == 4)
 					{
 						Console.WriteLine($"Found Category: {kvp.Key}");
 						return true;
 					}
 				}
+
 				return true;
 			}
 			else
@@ -172,11 +174,10 @@ namespace New_York_Times
 				{
 					int randomRow = rng.Next(board.GetLength(0));
 					int randomCol = rng.Next(board.GetLength(1));
-					string temp = board[i, j];
-					board[i, j] = board[randomRow, randomCol];
-					board[randomRow, randomCol] = temp;
+					(board[randomRow, randomCol], board[i, j]) = (board[i, j], board[randomRow, randomCol]);
 				}
 			}
+
 			return board;
 		}
 	}

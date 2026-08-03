@@ -4,6 +4,6 @@
 	{
 		public readonly Player Owner = owner;
 
-		override public string ToString() => "🛣️";
+		public override string ToString() => "🛣️";
 	}
 }

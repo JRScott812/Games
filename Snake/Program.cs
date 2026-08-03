@@ -4,7 +4,7 @@ namespace Snake
 {
 	internal class Program
 	{
-		static void Main()
+		private static void Main()
 		{
 			Random random = new();
 
@@ -27,7 +27,7 @@ namespace Snake
 
 			while (key != ConsoleKey.Q)
 			{
-				Console.ReadKey();
+				_ = Console.ReadKey();
 				grid[yPosition, xPostion] = ' ';
 				switch (key)
 				{
@@ -46,6 +46,7 @@ namespace Snake
 					default:
 						break;
 				}
+
 				grid[yPosition, xPostion] = '#';
 
 				Console.Clear();
@@ -56,6 +57,7 @@ namespace Snake
 					{
 						Console.Write(grid[x, y]);
 					}
+
 					Console.WriteLine();
 				}
 			}

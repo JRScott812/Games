@@ -11,7 +11,7 @@ namespace Hangman
 		public static List<char> guesses = [];
 		public static byte guessCount = 0;
 
-		static void Main()
+		private static void Main()
 		{
 			// While all letters aren't revealed
 			while (!revealed.All(b => b == true))
@@ -25,12 +25,14 @@ namespace Hangman
 					guessCount++;
 					CheckGuess(guessedLetter);
 				}
+
 				Console.Clear();
 			}
+
 			Console.WriteLine("Congratulations! You guessed the word, which was '" + word + "', in " + guessCount + " guesses.");
 		}
 
-		static void PrintHangman()
+		private static void PrintHangman()
 		{
 			for (int x = 0; x < word.Length; x++)
 			{
@@ -42,12 +44,14 @@ namespace Hangman
 				{
 					Console.Write('_');
 				}
+
 				Console.Write(' ');
 			}
+
 			Console.WriteLine();
 		}
 
-		static void CheckGuess(char guess)
+		private static void CheckGuess(char guess)
 		{
 			if (word.Contains(guess))
 			{
@@ -68,6 +72,7 @@ namespace Hangman
 			{
 				tempString += character;
 			}
+
 			return tempString;
 		}
 	}

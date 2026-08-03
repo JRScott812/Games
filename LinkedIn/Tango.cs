@@ -8,7 +8,7 @@ namespace LinkedIn
 		/// <summary>
 		/// <c>null</c> is empty, <c>true</c> is sun ☀️, <c>false</c> is moon 🌙.
 		/// </summary>
-		private bool?[,] Grid = new bool?[6, 6];
+		private readonly bool?[,] Grid = new bool?[6, 6];
 
 		private readonly bool?[,] SolutionGrid;
 
@@ -36,10 +36,7 @@ namespace LinkedIn
 			Grid = new bool?[6, 6];
 		}
 
-		public void SetCell(int row, int column, bool? value)
-		{
-			Grid[row, column] = value;
-		}
+		public void SetCell(int row, int column, bool? value) => Grid[row, column] = value;
 
 		public void DisplayGrid()
 		{
@@ -50,6 +47,7 @@ namespace LinkedIn
 					string icon = Grid[r, c] == true ? "☀️ " : Grid[r, c] == false ? "🌙 " : ". ";
 					Console.Write(icon);
 				}
+
 				Console.WriteLine();
 			}
 		}
@@ -170,9 +168,7 @@ namespace LinkedIn
 		private static bool?[,] GenerateValidBoard()
 		{
 			bool?[,] grid = new bool?[6, 6];
-			if (Fill(grid, 0, 0))
-				return grid;
-			throw new Exception("Failed to generate a valid Tango board.");
+			return Fill(grid, 0, 0) ? grid : throw new Exception("Failed to generate a valid Tango board.");
 		}
 
 		private static bool Fill(bool?[,] grid, int row, int col)
@@ -191,6 +187,7 @@ namespace LinkedIn
 					return true;
 				grid[row, col] = null;
 			}
+
 			return false;
 		}
 
@@ -217,9 +214,11 @@ namespace LinkedIn
 					consecutiveSuns = 0;
 					consecutiveMoons = 0;
 				}
+
 				if (consecutiveSuns > 2 || consecutiveMoons > 2)
 					return false;
 			}
+
 			if (sunsRow > 3 || moonsRow > 3)
 				return false;
 
@@ -246,13 +245,12 @@ namespace LinkedIn
 					consecutiveSuns = 0;
 					consecutiveMoons = 0;
 				}
+
 				if (consecutiveSuns > 2 || consecutiveMoons > 2)
 					return false;
 			}
-			if (sunsCol > 3 || moonsCol > 3)
-				return false;
 
-			return true;
+			return sunsCol <= 3 && moonsCol <= 3;
 		}
 	}
 }

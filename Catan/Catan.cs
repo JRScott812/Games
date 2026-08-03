@@ -11,10 +11,10 @@ namespace Catan
 	{
 		private int PlayerIndex = 0;
 
-		private Player[] Players = GeneratePlayers(playersCount);
+		private readonly Player[] Players = GeneratePlayers(playersCount);
 		private Player CurrentPlayer => Players[PlayerIndex];
 
-		private List<DevelopmentCard> DevelopmentCards = GenerateDevelopmentCards();
+		private readonly List<DevelopmentCard> DevelopmentCards = GenerateDevelopmentCards();
 
 		private static readonly Random random = new();
 
@@ -35,7 +35,7 @@ namespace Catan
 		/// </summary>
 		public bool HasWinner => Players.Any(p => p.HasWon);
 
-		private Hex[][] Board = GenerateBoard();
+		private readonly Hex[][] Board = GenerateBoard();
 
 		/// <summary>
 		/// Generates the game board with hex tiles.
@@ -128,6 +128,7 @@ namespace Catan
 			{
 				players[i] = new(PlayerColors[i]);
 			}
+
 			return players;
 		}
 
@@ -332,11 +333,7 @@ namespace Catan
 			// Check the corresponding vertex in the adjacent hexagon
 			Hex? adjacentHex = location.Edges[vertexIndex];
 			int adjacentVertexIndex = (vertexIndex + 1) % 6;
-			if (adjacentHex is not null && adjacentHex.Vertices[adjacentVertexIndex] is not null)
-			{
-				return false;
-			}
-			return true;
+			return adjacentHex is null || adjacentHex.Vertices[adjacentVertexIndex] is null;
 		}
 
 		/// <summary>
@@ -355,8 +352,10 @@ namespace Catan
 						Console.Write('|');
 					}
 				}
+
 				Console.WriteLine();
 			}
+
 			Console.WriteLine();
 		}
 

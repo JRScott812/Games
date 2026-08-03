@@ -5,7 +5,7 @@ namespace Catan
 {
 	internal class Program
 	{
-		static void Main()
+		private static void Main()
 		{
 			Console.OutputEncoding = Encoding.UTF8;
 			Console.WriteLine("Welcome to Settlers of Catan!");

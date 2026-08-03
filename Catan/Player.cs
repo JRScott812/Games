@@ -20,10 +20,7 @@ namespace Catan
 		/// Initializes a new instance of the <see cref="Player"/> class with the specified color.
 		/// </summary>
 		/// <param name="color">The color representing the player.</param>
-		public Player(ConsoleColor color)
-		{
-			Color = color;
-		}
+		public Player(ConsoleColor color) => Color = color;
 
 		/// <summary>
 		/// Gets the known victory points based on the player's buildings.
@@ -55,6 +52,7 @@ namespace Catan
 				{
 					return false;
 				}
+
 				resourceCounts[resource] = --value;
 			}
 
@@ -69,7 +67,7 @@ namespace Catan
 		{
 			foreach (Resources resource in resources)
 			{
-				ResourceCards.Remove(resource);
+				_ = ResourceCards.Remove(resource);
 			}
 		}
 
@@ -106,6 +104,7 @@ namespace Catan
 						{
 							tempBuilding.Upgrade();
 						}
+
 						Buildings.Add(tempBuilding);
 						break;
 					case Type t when t == typeof(DevelopmentCard):

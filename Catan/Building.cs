@@ -7,6 +7,6 @@
 
 		public void Upgrade() => IsCity = true;
 
-		override public string ToString() => IsCity ? "🏠" : "🏙️";
+		public override string ToString() => IsCity ? "🏠" : "🏙️";
 	}
 }

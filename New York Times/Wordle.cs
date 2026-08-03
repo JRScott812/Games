@@ -4,7 +4,7 @@ namespace New_York_Times
 {
 	public class Wordle : Game
 	{
-		public void Play()
+		public new void Play()
 		{
 			string word = "house";
 			string[] grid = new string[5];
@@ -33,6 +33,7 @@ namespace New_York_Times
 						Console.Write(grid[x][i]);
 						Console.BackgroundColor = ConsoleColor.Black;
 					}
+
 					Console.WriteLine();
 
 					if (grid[x] == word)
@@ -46,6 +47,7 @@ namespace New_York_Times
 					Console.WriteLine("Please enter a 5-letter word.");
 				}
 			}
+
 			Console.WriteLine($"You didn't guess the word, it was {word}.");
 		}
 	}

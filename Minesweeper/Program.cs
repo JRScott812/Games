@@ -5,7 +5,7 @@ namespace Minesweeper
 {
 	internal class Program
 	{
-		static void Main()
+		private static void Main()
 		{
 			byte height;
 			do { Console.Write("Enter height: "); }
@@ -23,7 +23,7 @@ namespace Minesweeper
 
 			Console.WriteLine(File.ReadAllText(Directory.GetCurrentDirectory() + '\\' + "Minesweeper Tutorial.txt"));
 			Console.WriteLine($"Press {ConsoleKey.Enter} to start.");
-			Console.ReadLine();
+			_ = Console.ReadLine();
 
 			board.Main();
 		}

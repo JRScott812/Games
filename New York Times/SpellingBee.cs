@@ -7,12 +7,12 @@ namespace New_York_Times
 {
 	internal class SpellingBee : Game
 	{
-		readonly char centerLetter;
-		char[] otherLetters = new char[6];
+		private readonly char centerLetter;
+		private char[] otherLetters = new char[6];
 
-		List<string> foundWords = [];
+		private readonly List<string> foundWords = [];
 
-		int points = 0;
+		private int points = 0;
 
 		public SpellingBee() : base()
 		{
@@ -37,6 +37,7 @@ namespace New_York_Times
 					return false;
 				}
 			}
+
 			return true;
 		}
 
@@ -97,6 +98,7 @@ namespace New_York_Times
 			{
 				Console.WriteLine(word);
 			}
+
 			Console.WriteLine();
 			DisplayLetters();
 		}

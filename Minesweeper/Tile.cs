@@ -25,12 +25,6 @@ namespace Minesweeper
 			_ => ConsoleColor.White
 		};
 
-		public override readonly string ToString()
-		{
-			if (IsFlagged) return "!";
-			if (IsHidden) return "?";
-			if (IsMine) return "*";
-			return SurroundingMines.ToString();
-		}
+		public override readonly string ToString() => IsFlagged ? "!" : IsHidden ? "?" : IsMine ? "*" : SurroundingMines.ToString();
 	}
 }

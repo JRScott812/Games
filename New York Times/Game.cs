@@ -5,26 +5,14 @@ namespace New_York_Times
 {
 	public abstract class Game
 	{
-		readonly public string filePath;
+		public readonly string filePath;
 
-		public Game()
-		{
-			filePath = Path.Combine("Game States", GetType().Name + ".txt");
-		}
+		public Game() => filePath = Path.Combine("Game States", GetType().Name + ".txt");
 
-		public void Play()
-		{
-			Main();
-		}
+		public void Play() => Main();
 
-		public virtual void Main()
-		{
-			throw new NotImplementedException();
-		}
+		public virtual void Main() => throw new NotImplementedException();
 
-		public virtual string ShareableResults()
-		{
-			throw new NotImplementedException();
-		}
+		public virtual string ShareableResults() => throw new NotImplementedException();
 	}
 }

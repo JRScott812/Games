@@ -7,9 +7,9 @@ namespace New_York_Times
 {
 	internal class LetterBoxed : Game
 	{
-		char[][] sides = new char[4][];
+		private readonly char[][] sides = new char[4][];
 
-		List<string> foundWords = [];
+		private readonly List<string> foundWords = [];
 
 		public LetterBoxed() : base()
 		{

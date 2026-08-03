@@ -53,8 +53,9 @@ namespace LinkedIn
 				{
 					string pointer = (i == index) ? ">" : " ";
 					string guess = Guesses[i] ?? "";
-					Console.WriteLine($"{pointer}{i + 1,2}: {hints[i].PadRight(25)}| {guess}");
+					Console.WriteLine($"{pointer}{i + 1,2}: {hints[i],-25}| {guess}");
 				}
+
 				Console.WriteLine("\nUp/Down: Move  |  L/R: Move hint up/down  |  V: Reverse  |  Enter: Edit guess  |  C: Check  |  Esc: Exit");
 
 				ConsoleKey key = Console.ReadKey(true).Key;
@@ -89,7 +90,9 @@ namespace LinkedIn
 						Console.WriteLine();
 						(bool allCorrect, bool transitionOk) = CheckSolution();
 						if (allCorrect && transitionOk)
+						{
 							Console.WriteLine("Congratulations! All guesses are correct, in the right order, and transitions are valid!");
+						}
 						else
 						{
 							if (!allCorrect)
@@ -97,8 +100,9 @@ namespace LinkedIn
 							if (!transitionOk)
 								Console.WriteLine("Some transitions between words are invalid (not a 1-letter change).");
 						}
+
 						Console.WriteLine("Press any key to continue...");
-						Console.ReadKey(true);
+						_ = Console.ReadKey(true);
 						break;
 					case ConsoleKey.Escape:
 						break;
@@ -150,6 +154,7 @@ namespace LinkedIn
 				words[i] = parts[0];
 				hints[i] = parts[1];
 			}
+
 			return (words, hints);
 		}
 
@@ -166,6 +171,7 @@ namespace LinkedIn
 					allCorrect = false;
 				}
 			}
+
 			for (int i = 0; i < 6; i++)
 			{
 				if (!string.IsNullOrWhiteSpace(Guesses[i]) && !string.IsNullOrWhiteSpace(Guesses[i + 1]))
@@ -181,6 +187,7 @@ namespace LinkedIn
 					transitionsOk = false;
 				}
 			}
+
 			return (allCorrect, transitionsOk);
 		}
 	}

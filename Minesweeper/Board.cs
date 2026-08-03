@@ -76,10 +76,7 @@ namespace Minesweeper
 		/// <summary>
 		/// Toggles the flag attribute, of the tile at the current <see cref="xCoord"/> & <see cref="yCoord"/>.
 		/// </summary>
-		public void Flag()
-		{
-			Grid[yCoord, xCoord].IsFlagged = !Grid[yCoord, xCoord].IsFlagged;
-		}
+		public void Flag() => Grid[yCoord, xCoord].IsFlagged = !Grid[yCoord, xCoord].IsFlagged;
 
 		public void Dig()
 		{
@@ -120,6 +117,7 @@ namespace Minesweeper
 					}
 				}
 			}
+
 			return hiddenTiles;
 		}
 
@@ -136,6 +134,7 @@ namespace Minesweeper
 					}
 				}
 			}
+
 			return flagCount;
 		}
 		private static byte GetSurroundingMines(byte x, byte y, Tile[,] array)
@@ -159,6 +158,7 @@ namespace Minesweeper
 					}
 				}
 			}
+
 			return mineCount;
 		}
 		#endregion
@@ -221,6 +221,7 @@ namespace Minesweeper
 					Console.Write(Grid[y, x]);
 					Console.ResetColor();
 				}
+
 				Console.WriteLine();
 			}
 		}
@@ -300,6 +301,7 @@ namespace Minesweeper
 						break;
 					#endregion
 				}
+
 				PrintArray();
 				key = Console.ReadKey().Key;
 				Console.Clear();
@@ -317,6 +319,7 @@ namespace Minesweeper
 			{
 				Console.WriteLine("You Lost!");
 			}
+
 			Console.WriteLine($"Game lasted: {stopwatch.Elapsed}");
 		}
 
@@ -327,10 +330,10 @@ namespace Minesweeper
 		public string Status()
 		{
 			StringBuilder stringBuilder = new();
-			stringBuilder.AppendLine($"Possible Mines Found: {NumberOfFlags}");
-			stringBuilder.AppendLine($"Possible Mines Left: {PotentialRemainingMines}");
-			stringBuilder.AppendLine($"Hidden Tiles: {NumberOfHiddenTiles}");
-			stringBuilder.AppendLine($"Chances that tile is mine: {ChanceThatHiddenTileIsMine:P}%");
+			_ = stringBuilder.AppendLine($"Possible Mines Found: {NumberOfFlags}");
+			_ = stringBuilder.AppendLine($"Possible Mines Left: {PotentialRemainingMines}");
+			_ = stringBuilder.AppendLine($"Hidden Tiles: {NumberOfHiddenTiles}");
+			_ = stringBuilder.AppendLine($"Chances that tile is mine: {ChanceThatHiddenTileIsMine:P}%");
 			return stringBuilder.ToString();
 		}
 
@@ -349,10 +352,12 @@ namespace Minesweeper
 			{
 				for (int x = 0; x < width; x++)
 				{
-					stringBuilder.Append(Grid[x, y]);
+					_ = stringBuilder.Append(Grid[x, y]);
 				}
-				stringBuilder.AppendLine();
+
+				_ = stringBuilder.AppendLine();
 			}
+
 			return stringBuilder.ToString();
 		}
 	}

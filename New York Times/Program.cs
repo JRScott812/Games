@@ -5,7 +5,7 @@ namespace New_York_Times
 {
 	internal class Program
 	{
-		static void Main()
+		private static void Main()
 		{
 			List<(string Name, Game GameInstance)> games =
 			[
@@ -27,6 +27,7 @@ namespace New_York_Times
 				{
 					Console.WriteLine($"{i + 1}. {games[i].Name}");
 				}
+
 				Console.WriteLine("0. Exit");
 
 				ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
@@ -92,13 +93,14 @@ namespace New_York_Times
 					{
 						Console.WriteLine($"{games[index - 1].Name} is not implemented yet.");
 					}
+
 					Console.WriteLine("\nPress any key to return to the menu...");
-					Console.ReadKey(true);
+					_ = Console.ReadKey(true);
 				}
 				else
 				{
 					Console.WriteLine("\nInvalid choice. Press any key to try again...");
-					Console.ReadKey(true);
+					_ = Console.ReadKey(true);
 				}
 			}
 		}

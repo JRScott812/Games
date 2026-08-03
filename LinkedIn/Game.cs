@@ -5,7 +5,7 @@ namespace LinkedIn
 {
 	internal abstract class Game
 	{
-		Stopwatch Timer = new();
+		private readonly Stopwatch Timer = new();
 
 		public void Play()
 		{
@@ -15,9 +15,6 @@ namespace LinkedIn
 			Console.WriteLine($"Completed in {Timer.Elapsed.TotalSeconds} seconds.");
 		}
 
-		public virtual void Main()
-		{
-			throw new NotImplementedException();
-		}
+		public virtual void Main() => throw new NotImplementedException();
 	}
 }
