@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Monopoly
 {
-	public class Player(string name, string icon)
+	internal class Player(string name, string icon)
 	{
 		public readonly string Name = name;
 		public readonly string Icon = icon;
@@ -21,22 +21,16 @@ namespace Monopoly
 		/// <summary>
 		/// Put the player in jail.
 		/// </summary>
-		public void PutInJail()
-		{
-			throw new System.NotImplementedException();
-		}
+		public void PutInJail() => throw new System.NotImplementedException();
 
-		public void Advance(int moveDistance)
-		{
-			TotalDistance += moveDistance;
-		}
+		public void Advance(int moveDistance) => TotalDistance += moveDistance;
 
 		public bool PayRent(Property property, Player owner)
 		{
 			if (Money >= property.Rent)
 			{
 				Money -= property.Rent;
-				owner.ReceivePayment(property.Rent);
+				_ = owner.ReceivePayment(property.Rent);
 				return true;
 			}
 			else

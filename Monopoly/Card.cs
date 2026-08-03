@@ -2,12 +2,14 @@
 
 namespace Monopoly
 {
-	public class Card(string name, string icon, string description)
+	internal class Card(string name, string icon, string description, EventType type, int value) : TileWithIcon(name, icon)
 	{
-		public readonly string Name = name;
-		public readonly string Icon = icon;
 		public readonly string Description = description;
 
-		public override string ToString() => $"{Name}: {Icon}{Environment.NewLine}{Description}";
+		public readonly EventType Type = type;
+
+		public readonly int Value = value;
+
+		public override string ToString() => base.ToString() + $"{Environment.NewLine}{Description}";
 	}
 }

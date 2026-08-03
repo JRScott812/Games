@@ -1,73 +1,23 @@
-﻿using System.ComponentModel;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Monopoly
 {
 
-	internal class Game(int numberofPlayers)
+	internal class Game(int numberOfPlayers)
 	{
 		public static readonly string[] PlayerIcons = ["🎩", "🪣", "🏎️", "🚢", "🥾", "🔫", "🪙", "👛"];
 
 		public static readonly Random random = new();
 
-		public readonly Tile[] Board = [
-			new Event("GO", "➡️", 200, Event.EventType.Charity),
-			new Property("Mediterranean Avenue", ConsoleColor.DarkGray),
-			new Event("Community Chest", "🎁", 0, Event.EventType.CommunityChest),
-			new Property("Baltic Avenue", ConsoleColor.DarkGray),
-			new Event("Income Tax", "💰", -200, Event.EventType.Tax),
-			new Utility("Reading Railroad", "🚂"),
-			new Property("Oriental Avenue", ConsoleColor.Cyan),
-			new Event("Chance", "❓", 0, Event.EventType.Chance),
-			new Property("Vermont Avenue", ConsoleColor.Cyan),
-			new Property("Connecticut Avenue", ConsoleColor.Cyan),
+		public readonly Player[] Players = new Player[numberOfPlayers];
 
-			new Event("Jail", "🚓", 0, Event.EventType.Jail),
-			new Property("St. Charles Place", ConsoleColor.DarkMagenta),
-			new Utility("Electric Company", "💡"),
-			new Property("States Avenue", ConsoleColor.DarkMagenta),
-			new Property("Virginia Avenue", ConsoleColor.DarkMagenta),
-			new Utility("Pennsylvania Railroad", "🚂"),
-			new Property("St. James Place", ConsoleColor.DarkYellow),
-			new Event("Community Chest", "🎁", 0, Event.EventType.CommunityChest),
-			new Property("Tennessee Avenue", ConsoleColor.DarkYellow),
-			new Property("New York Avenue", ConsoleColor.DarkYellow),
-
-			new Event("Free Parking", "🅿️", 200, Event.EventType.Charity),
-			new Property("Kentucky Avenue", ConsoleColor.Red),
-			new Event("Chance", "❓", 0, Event.EventType.Chance),
-			new Property("Indiana Avenue", ConsoleColor.Red),
-			new Property("Illinois Avenue", ConsoleColor.Red),
-			new Utility("B&O Railroad", "🚂"),
-			new Property("Atlantic Avenue", ConsoleColor.Yellow),
-			new Property("Ventnor Avenue", ConsoleColor.Yellow),
-			new Utility("Water Works", "🚰"),
-			new Property("Marvin Gardens", ConsoleColor.Yellow),
-
-			new Event("Go To Jail", "👮", 0, Event.EventType.Jail),
-			new Property("Pacific Avenue", ConsoleColor.Green),
-			new Property("North Carolina Avenue", ConsoleColor.Green),
-			new Event("Community Chest", "🎁", 0, Event.EventType.CommunityChest),
-			new Property("Pennsylvania Avenue", ConsoleColor.Green),
-			new Utility("Short Line Railroad", "🚂"),
-			new Event("Chance", "❓", 0, Event.EventType.Chance),
-			new Property("Park Place", ConsoleColor.Blue),
-			new Event("Luxury Tax", "💎", -100, Event.EventType.Tax),
-			new Property("Boardwalk", ConsoleColor.Blue)
-		];
-
-		public List<Card> ChanceCards = [
-
-		];
-		public List<Card> CommunityChestCards = [
-
-		];
-
-		public readonly Player[] Players = new Player[numberofPlayers];
+		public Board Board { get; private set; } = new();
 
 		public int Turns { get; private set; } = 0;
 		public int CurrentPlayerTurn => Turns / 4;
+		public Player CurrentPlayer => Players[CurrentPlayerTurn];
 
 		public static int RollDie() => random.Next(1, 7);
 		public static (int, int) RollDice() => (RollDie(), RollDie());
@@ -93,7 +43,6 @@ namespace Monopoly
 					}
 				} while (repeatedName == true);
 
-
 				bool repeatedIcon = false;
 				string icon;
 				do
@@ -102,6 +51,7 @@ namespace Monopoly
 					{
 						Console.WriteLine($"{j + 1}: {PlayerIcons[j]}");
 					}
+
 					int iconIndex = PromptForInput<int>($"Select icon for Player #{i + 1}: {name}");
 					icon = PlayerIcons[iconIndex - 1];
 
@@ -122,6 +72,26 @@ namespace Monopoly
 			}
 		}
 
+		#region Display
+		public void DisplayPlayers()
+		{
+			Player[] rankings = [.. Players.OrderByDescending(p => p.Money)];
+
+			for (int i = 0; i < rankings.Length; i++)
+			{
+				Player player = rankings[i];
+				Console.WriteLine($"{i + 1}: {player.Name} {player.Icon} --> ${player.Money}");
+			}
+		}
+
+		public void Display()
+		{
+			DisplayPlayers();
+			Console.WriteLine();
+			Board.Display(Players);
+		}
+		#endregion
+
 		public void TakeTurn(Player player)
 		{
 			int speedingCount = 0;
@@ -136,6 +106,7 @@ namespace Monopoly
 				{
 					speedingCount++;
 				}
+
 				if (speedingCount >= 3)
 				{
 					player.PutInJail();
@@ -143,7 +114,7 @@ namespace Monopoly
 				}
 
 				player.Advance(totalValue);
-				Tile currentTile = Board[player.Position];
+				Tile currentTile = Board.Tiles[player.Position];
 
 				if (currentTile is Property property)
 				{
@@ -167,43 +138,25 @@ namespace Monopoly
 						bool wantsToBuy = PromptForInput<bool>($"Do you want to buy {property.Name} for ${property.Cost}? (true/false)");
 						if (wantsToBuy && player.Money >= property.Cost)
 						{
-							player.ReceivePayment(-property.Cost);
+							_ = player.ReceivePayment(-property.Cost);
 							player.OwnedProperties.Add(property);
 							Console.WriteLine($"{player.Name} bought {property.Name}!");
 						}
 					}
 				}
 			}
+
 			Turns++;
 		}
 
-		public void DisplayBoard()
+		public void Main()
 		{
-			for (int i = 0; i < Board.Length; i++)
+			while (true)
 			{
-				if (Board[i] is Property property)
-				{
-					Console.ForegroundColor = property.Color;
-				}
-				string tileDisplay = Board[i].ToString();
-				foreach (Player player in Players)
-				{
-					if (player.Position == i)
-					{
-						tileDisplay += ' ' + player.Icon;
-					}
-				}
-				Console.WriteLine(tileDisplay);
-				Console.ResetColor();
+				Console.WriteLine($"It's {CurrentPlayer.Name}'s turn! {CurrentPlayer.Icon}");
+				TakeTurn(CurrentPlayer);
+				Display();
 			}
-
-			string playersKey = "Players Key: ";
-			foreach (Player player in Players)
-			{
-				playersKey += $"{player.Name} = {player.Icon}";
-			}
-			Console.WriteLine();
-			Console.WriteLine(playersKey);
 		}
 
 		public static T PromptForInput<T>(string prompt)
@@ -239,11 +192,11 @@ namespace Monopoly
 			}
 		}
 
-		public void PayRent(Player player, Property property, Player owner)
+		public static void PayRent(Player player, Property property, Player owner)
 		{
 			if (!player.OwnedProperties.Contains(property))
 			{
-				player.PayRent(property, owner);
+				_ = player.PayRent(property, owner);
 			}
 		}
 	}

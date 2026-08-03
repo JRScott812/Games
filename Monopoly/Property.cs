@@ -2,22 +2,20 @@
 
 namespace Monopoly
 {
-	public class Property(string name, ConsoleColor color) : Tile(name)
+	internal class Property(string name, ConsoleColor color, int cost) : Tile(name)
 	{
 		public readonly ConsoleColor Color = color;
-		public int Cost;
+		public readonly int Cost = cost;
 
-		public int HousesCount { get; private set; } = 0;
+		public HouseStatus Houses { get; private set; } = HouseStatus.NoHouses;
 
-		public bool HasHotel { get; private set; } = false;
-
-		public int Rent { get; private set; }
+		public int Rent => Cost / 10 * (int)Houses;
 
 		public bool AddHouse()
 		{
-			if (HousesCount < 4)
+			if ((int)Houses < 4)
 			{
-				HousesCount++;
+				Houses++;
 				return true;
 			}
 			else
@@ -29,10 +27,9 @@ namespace Monopoly
 
 		public bool UpgradeToHotel()
 		{
-			if (HousesCount == 4)
+			if ((int)Houses == 4)
 			{
-				HousesCount = 0;
-				HasHotel = true;
+				Houses++;
 				return true;
 			}
 			else
@@ -42,6 +39,16 @@ namespace Monopoly
 			}
 		}
 
-		public override string ToString() => Name;
+		public override string ToString() => base.ToString() + $"\t${Cost}";
+
+		public enum HouseStatus
+		{
+			NoHouses = 0,
+			OneHouse = 1,
+			TwoHouses = 2,
+			ThreeHouses = 3,
+			FourHouses = 4,
+			Hotel = 5
+		}
 	}
 }

@@ -1,9 +1,7 @@
 ﻿namespace Monopoly
 {
-	public class Utility(string name, string icon) : Tile(name)
+	internal class Utility(bool isElectric) : TileWithIcon(isElectric ? "Electric Company" : "Water Works", isElectric ? "💡" : "🚰")
 	{
-		public readonly string Icon = icon;
 
-		public override string ToString() => $"{Name}: {Icon}";
 	}
 }

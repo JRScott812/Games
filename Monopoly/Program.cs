@@ -1,11 +1,11 @@
-﻿using System.Text;
-using System;
+﻿using System;
+using System.Text;
 
 namespace Monopoly
 {
 	internal class Program
 	{
-		static void Main()
+		private static void Main()
 		{
 			Console.OutputEncoding = Encoding.UTF8;
 			Console.WriteLine($"Welcome to Monopoly!{Environment.NewLine}🎩{Environment.NewLine}🤑");
@@ -14,7 +14,8 @@ namespace Monopoly
 
 			Game game = new(numberOfPlayers);
 			game.SetupGame();
-			game.DisplayBoard();
+			game.Display();
+			game.Main();
 		}
 	}
 }
